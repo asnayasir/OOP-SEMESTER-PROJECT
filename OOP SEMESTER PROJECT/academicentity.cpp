@@ -74,5 +74,21 @@ protected:
         return true;
     }
 
-   
+    bool isValidEmail(const string& e) const {
+        if (e.empty()) return false;
+
+        int atPos = -1;
+        int dotPos = -1;
+
+        for (int i = 0; i < (int)e.length(); i++) {
+            if (e[i] == '@') {
+                atPos = i;
+            }
+            if (atPos != -1 && e[i] == '.' && i > atPos + 1) {
+                dotPos = i;
+            }
+        }
+
+        return (atPos > 0 && dotPos > atPos && dotPos < (int)e.length() - 1);
+    }
 };
