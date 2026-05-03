@@ -15,7 +15,7 @@ struct TranscriptEntry {
 };
 
 
-class Student : public AcademicEntity {
+class Student : public AcademicEntity {         
 protected:
     string studentType; // "Regular" | "Scholarship" | "Exchange"
     string enrolledCourseIDs[MAX_COURSES_PER_STUDENT];
@@ -32,16 +32,19 @@ public:
 
     virtual ~Student() {}
 
-    string getStudentType() const { 
-        return studentType; }
+    string getStudentType() const {
+        return studentType;
+    }
     int getEnrolledCount() const {
-        return enrolledCount; }
+        return enrolledCount;
+    }
     string getEnrolledCourse(int i) const {
-        return enrolledCourseIDs[i]; }
+        return enrolledCourseIDs[i];
+    }
 
     bool isEnrolledIn(const string& cid) const {
         for (int i = 0; i < enrolledCount; i++)
-            if (enrolledCourseIDs[i] == cid) 
+            if (enrolledCourseIDs[i] == cid)
                 return true;
         return false;
     }
@@ -50,4 +53,14 @@ public:
         if (enrolledCount < MAX_COURSES_PER_STUDENT && !isEnrolledIn(cid))
             enrolledCourseIDs[enrolledCount++] = cid;
     }
-}
+    void dropCourse(const string& cid) {
+        for (int i = 0; i < enrolledCount; i++) {
+            if (enrolledCourseIDs[i] == cid) {
+                for (int j = i; j < enrolledCount - 1; j++)
+                    enrolledCourseIDs[j] = enrolledCourseIDs[j + 1];
+                enrolledCount--;
+                return;
+            }
+        }
+    }
+};
