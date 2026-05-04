@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 using namespace std;
@@ -30,7 +31,7 @@ public:
     void setID(const string& id) {
         if (id.empty()) {
             ID = "default0";
-            cout << "Warning: Empty cannot be empty. Assigned default0\n";
+            cout << "Warning: id cannot be empty. Assigned default0\n";
         }
         else {
             ID = id;

@@ -213,5 +213,99 @@ public:
     }
 };
 
-    //scholarship student
+class ScholarshipStudent : public Student {
+private:
+    float  minGPA;
+    string status; // it can be active or low
+
+public:
+    ScholarshipStudent() : minGPA(3.0f), status("Active") {
+        studentType = "Scholarship";
+    }
+
+    ScholarshipStudent(const string& id, const string& n, const string& e, float mg = 3.0f)
+        : Student(id, n, e) {
+        studentType = "Scholarship";
+
+        if (mg < 0) mg = 0;
+        if (mg > 4) mg = 4;
+        minGPA = mg;
+        status = "Active";
+    }
+
+    float getMinGPA()  const { return minGPA; }
+    string getStatus() const {
+        
+        float currentGPA = calculateGPA();
+        if (currentGPA < minGPA && transcriptCount > 0) {
+            return "Low";
+        }
+        return "Active";
+    }
+
+    void setMinGPA(float m) {
+        if (m < 0) m = 0;
+        if (m > 4) m = 4;
+        minGPA = m;
+    }
+
+    float calculateGPA() const override {
+        if (transcriptCount == 0) return 0.0f;
+
+        float total = 0;
+        int count = 0;
+
+        for (int i = 0; i < transcriptCount; i++) {
+            float pct = transcript[i].percentage;
+
+            if (pct < 0) pct = 0;
+            if (pct > 100) pct = 100;
+
+            float pts = 0;
+            if (pct >= 90) pts = 4.0f;
+            else if (pct >= 85) pts = 3.7f;
+            else if (pct >= 80) pts = 3.3f;
+            else if (pct >= 75) pts = 3.0f;
+            else if (pct >= 70) pts = 2.7f;
+            else if (pct >= 65) pts = 2.3f;
+            else if (pct >= 60) pts = 2.0f;
+            else if (pct >= 55) pts = 1.7f;
+            else if (pct >= 50) pts = 1.0f;
+
+            total += pts;
+            count++;
+        }
+
+        return total / count;
+    }
+
+    void viewTranscript() const override {
+        cout << "\n========== TRANSCRIPT: " << name << " (" << ID << ") [SCHOLARSHIP] ==========\n";
+
+        if (transcriptCount == 0) {
+            cout << "  No grades recorded yet.\n";
+        }
+        else {
+            for (int i = 0; i < transcriptCount; i++) {
+                cout << "  " << transcript[i].courseID
+                    << " - " << transcript[i].courseTitle
+                    << "  | " << transcript[i].percentage << "%"
+                    << "  | Grade: " << transcript[i].grade << "\n";
+            }
+            cout << "  GPA: " << calculateGPA() << "  |  Min Required: " << minGPA
+                << "  |  Status: " << getStatus() << "\n";
+        }
+
+        cout << "=================================================================\n";
+    }
+
+    void displayProfile() const override {
+        cout << "[Scholarship Student] ID: " << ID
+            << " | Name: " << name
+            << " | Email: " << email
+            << " | GPA: " << calculateGPA()
+            << " | Min Required: " << minGPA
+            << " | Status: " << getStatus() << "\n";
+    }
+};
     //exchange student
