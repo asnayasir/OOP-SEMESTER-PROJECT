@@ -308,4 +308,71 @@ public:
             << " | Status: " << getStatus() << "\n";
     }
 };
-    //exchange student
+class ExchangeStudent : public Student {
+private:
+    string homeUniversity;
+
+public:
+    ExchangeStudent() : homeUniversity("Unknown") {
+        studentType = "Exchange";
+    }
+
+    ExchangeStudent(const string& id, const string& n, const string& e, const string& hu = "Unknown")
+        : Student(id, n, e) {
+        studentType = "Exchange";
+        homeUniversity = hu.empty() ? "Unknown" : hu;
+    }
+
+    float calculateGPA() const override {
+        return -1;  // Not applied to exchange students
+    }
+
+    void addPassFailGrade(const string& cid, const string& ctitle, float pct) {
+        if (cid.empty()) {
+            cout << "Error: Cannot add grade with empty course ID\n";
+            return;
+        }
+
+        if (pct < 0) pct = 0;
+        if (pct > 100) pct = 100;
+
+        string pf = (pct >= 50) ? "Pass" : "Fail";
+
+        if (pct < 50) {
+            cout << "Warning: Student " << name << " is failing " << cid << " with " << pct << "%\n";
+        }
+
+        updateTranscript(cid, ctitle, pct, pf, pf);
+    }
+
+    void viewTranscript() const override {
+        cout << "\n========== TRANSCRIPT: " << name << " (" << ID << ") [EXCHANGE] ==========\n";
+
+        if (transcriptCount == 0) {
+            cout << "  No grades recorded yet.\n";
+        }
+        else {
+            for (int i = 0; i < transcriptCount; i++) {
+                cout << "  " << transcript[i].courseID
+                    << " - " << transcript[i].courseTitle
+                    << "  | Result: " << transcript[i].passFail << "\n";
+            }
+            cout << "  Home University: " << homeUniversity << "\n";
+        }
+
+        cout << "================================================================\n";
+    }
+
+    void displayProfile() const override {
+        cout << "[Exchange Student] ID: " << ID
+            << " | Name: " << name
+            << " | Email: " << email
+            << " | Home University: " << homeUniversity << "\n";
+    }
+
+    string getHomeUniversity() const { return homeUniversity; }
+    void setHomeUniversity(const string& hu) {
+        homeUniversity = hu.empty() ? "Unknown" : hu;
+    }
+};
+   
