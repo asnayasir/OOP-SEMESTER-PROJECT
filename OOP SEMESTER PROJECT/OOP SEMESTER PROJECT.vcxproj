@@ -126,6 +126,12 @@
     <ClCompile Include="AcademicEntity.h" />
     <ClCompile Include="Student.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Assessment.h" />
+    <ClInclude Include="Course.h" />
+    <ClInclude Include="Teacher.h" />
+    <ClInclude Include="Weightageconfig.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

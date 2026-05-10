@@ -22,4 +22,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Teacher.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Assessment.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Weightageconfig.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Course.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
