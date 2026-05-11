@@ -35,5 +35,11 @@
     <ClInclude Include="Course.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Venuesection.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Databasemanager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
