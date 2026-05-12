@@ -134,3 +134,19 @@ inline void getWeightage(const string& courseType, float& exam, float& assignmen
         quiz = labWeight.quiz;
     }
 }
+//function to save default weightages to file
+inline void saveDefaultWeightages(const string& filename) {
+    ofstream file(filename);
+
+    if (!file.is_open()) {
+        cout << "Error: Cannot create " << filename << endl;
+        return;
+    }
+
+    file << "C|60|20|20\n";
+    file << "E|0|60|40\n";
+    file << "L|0|70|30\n";
+
+    file.close();
+    cout << "Default weightages saved to " << filename << endl;
+}
