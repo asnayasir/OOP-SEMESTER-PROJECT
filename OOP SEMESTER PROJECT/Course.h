@@ -1,6 +1,6 @@
 #pragma once
 #include "Assessment.h"
-#include "WeightageConfig.h"
+#include "Weightageconfig.h"
 #include <string>
 #include <iostream>
 using namespace std;

@@ -130,6 +130,7 @@
     <ClInclude Include="Assessment.h" />
     <ClInclude Include="Course.h" />
     <ClInclude Include="Databasemanager.h" />
+    <ClInclude Include="Scheduler.h" />
     <ClInclude Include="Teacher.h" />
     <ClInclude Include="Venuesection.h" />
     <ClInclude Include="Weightageconfig.h" />

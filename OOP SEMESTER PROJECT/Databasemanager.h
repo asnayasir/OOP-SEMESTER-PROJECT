@@ -2,7 +2,7 @@
 #include "Student.h"
 #include "Teacher.h"
 #include "Course.h"
-#include "VenueSection.h"
+#include "Venuesection.h"
 #include <fstream>
 #include <iostream>
 using namespace std;
