@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AcademicEntity.h" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Student.h" />
   </ItemGroup>
   <ItemGroup>
