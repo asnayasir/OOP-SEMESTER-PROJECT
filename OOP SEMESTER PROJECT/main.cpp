@@ -297,11 +297,13 @@ void pause() {
     cout << "\npress enter to continue...";
     cin.get();
 }
-
 void saveAll() {
     DatabaseManager::saveStudents(students, studentCount, "students.txt");
     DatabaseManager::saveTeachers(teachers, teacherCount, "teachers.txt");
     DatabaseManager::saveCourses(courses, courseCount, "courses.txt");
+    DatabaseManager::saveVenues(venues, venueCount, "venues.txt");
+    DatabaseManager::saveSections(sections, sectionCount, "sections.txt");
+    DatabaseManager::saveAssessments(courses, courseCount, "assessments.txt");
     cout << "all data saved\n";
 }
 
@@ -310,7 +312,10 @@ void loadAll() {
     studentCount = DatabaseManager::loadStudents("students.txt", students, MAX_STUDENTS);
     teacherCount = DatabaseManager::loadTeachers("teachers.txt", teachers, MAX_TEACHERS);
     courseCount = DatabaseManager::loadCourses("courses.txt", courses, MAX_COURSES);
+    venueCount = DatabaseManager::loadVenues("venues.txt", venues, MAX_VENUES);
+    sectionCount = DatabaseManager::loadSections("sections.txt", sections, MAX_SECTIONS);
     scheduler.setVenues(venues, venueCount);
+    DatabaseManager::loadAssessments("assessments.txt", courses, courseCount);
 }
 
 void addStudent() {
@@ -707,23 +712,13 @@ void enterMarks() {
     int atype = getSafeChoice(1, 3);
     float raw = getPositiveFloat("raw score: ");
     float max = getPositiveFloat("max score: ");
-    float wt = 0.30f;
-    string courseType = c->getCourseType();
-    if (courseType == "Core") {
-        if (atype == 1) wt = 0.60f;
-        else if (atype == 2) wt = 0.20f;
-        else wt = 0.20f;
-    }
-    else if (courseType == "Elective") {
-        if (atype == 1) wt = 0.00f;
-        else if (atype == 2) wt = 0.40f;
-        else wt = 0.60f;
-    }
-    else {
-        if (atype == 1) wt = 0.00f;
-        else if (atype == 2) wt = 0.30f;
-        else wt = 0.70f;
-    }
+    float examWt, assignWt, quizWt;
+    getWeightage(c->getCourseType(), examWt, assignWt, quizWt);
+
+    float wt = 0.0f;
+    if (atype == 1) wt = examWt;
+    else if (atype == 2) wt = quizWt;
+    else wt = assignWt;
     Assessment* a = NULL;
     if (atype == 1) {
         a = new Exam(raw, max, wt);
@@ -778,6 +773,21 @@ void viewCourseAssessments() {
     }
     cout << "final grade: " << c->calculateFinalGrade("") << "%\n";
 }
+void showWeightages() {
+    printHeader("current grading weightages");
+    float exam, assign, quiz;
+
+    getWeightage("Core", exam, assign, quiz);
+    cout << "Core Course:    Exam: " << exam * 100 << "%  |  Assignment: " << assign * 100 << "%  |  Quiz: " << quiz * 100 << "%\n";
+
+    getWeightage("Elective", exam, assign, quiz);
+    cout << "Elective Course: Exam: " << exam * 100 << "%  |  Assignment: " << assign * 100 << "%  |  Quiz: " << quiz * 100 << "%\n";
+
+    getWeightage("Lab", exam, assign, quiz);
+    cout << "Lab Course:     Exam: " << exam * 100 << "%  |  Assignment: " << assign * 100 << "%  |  Quiz: " << quiz * 100 << "%\n";
+
+    cout << "\n(To change these values, edit 'weightages.txt' and restart the program.)\n";
+}
 
 void gradingMenu() {
     int choice;
@@ -785,11 +795,13 @@ void gradingMenu() {
         printHeader("grading");
         cout << "1. enter marks\n";
         cout << "2. view assessments\n";
+        cout << "3. view current weightages\n";
         cout << "0. back\n";
         printLine();
-        choice = getSafeChoice(0, 2);
+        choice = getSafeChoice(0, 3);
         if (choice == 1) enterMarks();
         else if (choice == 2) viewCourseAssessments();
+        else if (choice == 3) showWeightages();
         if (choice != 0) pause();
     } while (choice != 0);
 }

@@ -9,7 +9,7 @@ const int MAX_TEACHER_COURSES = 20;
 
 struct FeedbackEntry {
     string studentID;
-    int    rating;   // this ranges from 1-5
+    int    rating = 0;   // this ranges from 1-5
     string comment;
 };
 

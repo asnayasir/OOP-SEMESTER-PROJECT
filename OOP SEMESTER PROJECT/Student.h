@@ -9,7 +9,7 @@ const int MAX_COURSES_PER_STUDENT = 20;
 struct TranscriptEntry {
     string courseID;
     string courseTitle;
-    float  percentage;
+    float  percentage = 0;
     string grade;
     string passFail; // for exchange students
 };
